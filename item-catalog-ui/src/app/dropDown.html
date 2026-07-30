@@ -1,0 +1,56 @@
+<form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+<div>
+<label for="type">Type</label>
+<select id="type" formControlName="type">
+    <option value="">Choose a type</option>
+    <option value="product">Product</option>
+    <option value="service">Service</option>
+</select>
+
+<div>
+    <label for="code_number">Code</label>
+    <input 
+    id="code_number"
+      type="text"
+      formControlName="code_number" >
+</div>
+
+<div>
+    <label for="name">Name</label>
+    <input 
+    id="name"
+      type="text"
+      formControlName="name" >
+</div>
+
+<div>
+    <label for="price">Price</label>
+    <input 
+    id="price"
+      type="number"
+      formControlName="price">
+</div>
+
+<div *ngIf="itemForm.controls.type.value === 'product'">
+    <label for="weightKg">Weight (KG)</label> 
+    <input 
+     id="weightKg"
+      type="number"
+      formControlName="weightKg" >
+</div>
+
+<div *ngIf="itemForm.controls.type.value === 'service'">
+    <label for="durationHours">Duration (H)</label> 
+    <input 
+    id="durationHours"
+      type="number"
+      formControlName="durationHours" >
+</div>
+
+<div>
+<button type="submit">
+    Add item
+</button>
+</div>
+</div>
+</form>
