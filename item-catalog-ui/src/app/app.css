@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f5f5f1;
+  color: #1f2823;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.catalog-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.catalog-card {
+  width: 100%;
+  max-width: 1100px;
+  padding: 36px;
+  border: 1px solid #111844;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 14px 35px rgba(45, 55, 48, 0.08);
+}
+
+.catalog-header {
+  margin-bottom: 30px;
+}
+
+.catalog-header h1 {
+  margin: 0;
+  font-size: 38px;
+  font-weight: 500;
+  color: #111844;
+}
+
+.catalog-header p {
+  margin: 10px 0 0;
+  font-size: 18px;
+  color: #111844;
+}

@@ -1,20 +1,77 @@
 
 
-<tr *ngFor="let item of items">
+<div class="list-section" *ngIf="items$ | async as items">
+  <div class="list-summary">
+    <strong>{{ items.length }} items</strong>
+  </div>
 
-    <td>{{item.code_number }}</td>
-    <td>{{item.name }}</td>
-    <td>{{item.price }}</td>
-    <td>{{item.type }}</td>
+  <div class="table-wrapper">
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Detail</th>
+          <th aria-label="Actions"></th>
+        </tr>
+      </thead>
 
-    <td>
-        <span *ngIf="item.type === 'service'">
-            {{item.durationHours}} h
-        </span>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>
+            <span
+              class="type-badge"
+              [class.product-badge]="item.type?.toLowerCase() === 'product'"
+              [class.service-badge]="item.type?.toLowerCase() === 'service'"
+            >
+              {{ item.type }}
+            </span>
+          </td>
 
-         <span *ngIf="item.type === 'product'">
-            {{item.weightKg}} kg
-         </span>
-    </td>
-</tr>
+          <td class="code-cell">
+            {{ item.code_number }}
+          </td>
 
+          <td class="name-cell">
+            {{ item.name }}
+          </td>
+
+          <td>
+            {{ item.price | number: '1.2-2' }}
+          </td>
+
+          <td class="detail-cell">
+            <span *ngIf="item.type?.toLowerCase() === 'product'">
+              {{ item.weightKg }} kg
+            </span>
+
+            <span *ngIf="item.type?.toLowerCase() === 'service'">
+              {{ item.durationHours }} h
+            </span>
+          </td>
+
+          <td class="action-cell">
+            <button
+              type="button"
+              class="delete-button"
+              aria-label="Delete item"
+              (click)="removeItem(item.id)"
+            >
+              ×
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="items.length === 0">
+          <td colspan="6" class="empty-message">
+            No items have been added yet.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+</div>

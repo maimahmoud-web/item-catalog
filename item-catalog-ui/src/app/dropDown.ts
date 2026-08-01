@@ -1,5 +1,5 @@
 import { ItemService } from "./item-service";
-
+import { createAction,props } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {  EventEmitter, Output } from '@angular/core';
@@ -70,6 +70,7 @@ onSubmit(): void {
 
     if (formValue.type==='service'){
         const ser: Service = {
+          
             code_number:formValue.code_number!,
             name:formValue.name!,
             price:formValue.price!,

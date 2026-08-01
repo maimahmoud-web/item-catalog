@@ -1,56 +1,88 @@
-<form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-<div>
-<label for="type">Type</label>
-<select id="type" formControlName="type">
-    <option value="">Choose a type</option>
-    <option value="product">Product</option>
-    <option value="service">Service</option>
-</select>
+<form
+  class="item-form"
+  [formGroup]="itemForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="form-grid">
+    <div class="form-field">
+      <label for="type">Type</label>
 
-<div>
-    <label for="code_number">Code</label>
-    <input 
-    id="code_number"
-      type="text"
-      formControlName="code_number" >
-</div>
+      <select id="type" formControlName="type">
+        <option value="" disabled>Choose a type</option>
+        <option value="product">Product</option>
+        <option value="service">Service</option>
+      </select>
+    </div>
 
-<div>
-    <label for="name">Name</label>
-    <input 
-    id="name"
-      type="text"
-      formControlName="name" >
-</div>
+    <div class="form-field">
+      <label for="code">Code</label>
 
-<div>
-    <label for="price">Price</label>
-    <input 
-    id="price"
-      type="number"
-      formControlName="price">
-</div>
+      <input
+        id="code"
+        type="text"
+        formControlName="code_number"
+        placeholder="ITM-004"
+      />
+    </div>
 
-<div *ngIf="itemForm.controls.type.value === 'product'">
-    <label for="weightKg">Weight (KG)</label> 
-    <input 
-     id="weightKg"
-      type="number"
-      formControlName="weightKg" >
-</div>
+    <div class="form-field form-field-name">
+      <label for="name">Name</label>
 
-<div *ngIf="itemForm.controls.type.value === 'service'">
-    <label for="durationHours">Duration (H)</label> 
-    <input 
-    id="durationHours"
-      type="number"
-      formControlName="durationHours" >
-</div>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Washer, M8"
+      />
+    </div>
 
-<div>
-<button type="submit">
+    <div class="form-field">
+      <label for="price">Price</label>
+
+      <input
+        id="price"
+        type="number"
+        step="0.01"
+        formControlName="price"
+        placeholder="1.20"
+      />
+    </div>
+
+    <div
+      class="form-field"
+      *ngIf="itemForm.controls.type.value === 'product'"
+    >
+      <label for="weight">Weight (kg)</label>
+
+      <input
+        id="weight"
+        type="number"
+        step="0.01"
+        formControlName="weightKg"
+        placeholder="0.01"
+      />
+    </div>
+
+    <div
+      class="form-field"
+      *ngIf="itemForm.controls.type.value === 'service'"
+    >
+      <label for="duration">Duration (h)</label>
+
+      <input
+        id="duration"
+        type="number"
+        formControlName="durationHours"
+        placeholder="2"
+      />
+    </div>
+  </div>
+
+  <button
+    class="add-button"
+    type="submit"
+    [disabled]="itemForm.invalid"
+  >
     Add item
-</button>
-</div>
-</div>
+  </button>
 </form>

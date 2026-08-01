@@ -1,8 +1,14 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ItemService } from './item-service';
-import { Item } from './item-models';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { Item } from './item-models';
+import { loadItem } from './item.actions';
+import { ItemState } from './item.state';
+
+import { deleteItem } from './item.actions';
 
 @Component({
   selector: 'showListType',
@@ -11,25 +17,25 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   styleUrl: './showListType.css'
 })
-export class showListType implements OnInit {
+export class ShowListType implements OnInit {
 
-  items: Item[] = [];
+  items$: Observable<Item[]>;
 
-  constructor(private itemService: ItemService) {}
+  constructor(
+    private store: Store<{ items: ItemState }>
+  ) {
+    this.items$ = this.store.select(
+      state => state.items.items
+    );
+  }
 
   ngOnInit(): void {
-    this.loadItems();
+    this.store.dispatch(loadItem());
   }
 
-  loadItems(): void {
-    this.itemService.getItem().subscribe({
-      next: data => {
-        this.items = data;
-      },
-
-      error: error => {
-        console.error('Could not load items:', error);
-      }
-    });
-  }
+  removeItem(id: number): void {
+  this.store.dispatch(
+    deleteItem({ id })
+  );
+}
 }
