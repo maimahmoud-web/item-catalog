@@ -9,6 +9,7 @@ import { loadItem } from './item.actions';
 import { ItemState } from './item.state';
 
 import { deleteItem } from './item.actions';
+import { ItemService } from './item-service';
 
 @Component({
   selector: 'showListType',
@@ -20,6 +21,7 @@ import { deleteItem } from './item.actions';
 export class ShowListType implements OnInit {
 
   items$: Observable<Item[]>;
+
   showReload = false;
 
   constructor(
@@ -34,16 +36,7 @@ export class ShowListType implements OnInit {
     this.store.dispatch(loadItem());
   }
 
-  showReloadButton(): void {
-    this.showReload = true;
-  }
-
-  reloadItems(): void {
-    this.store.dispatch(loadItem());
-    this.showReload = false;
-  }
-
-  removeItem(id: number | undefined): void {
+ removeItem(id: number | undefined): void {
   if (id === undefined) {
     return;
   }
@@ -51,5 +44,15 @@ export class ShowListType implements OnInit {
   this.store.dispatch(deleteItem({ id }));
 }
 
+showReloadButton(): void {
+ 
+  console.log('showReloadButton called');
+   this.showReload = true;
+}
 
+reloadItems(): void {
+  this.store.dispatch(loadItem());
+
+  this.showReload = false;
+}
 }

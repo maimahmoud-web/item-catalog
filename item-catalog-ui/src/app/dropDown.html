@@ -7,11 +7,22 @@
     <div class="form-field">
       <label for="type">Type</label>
 
-      <select id="type" formControlName="type">
+      <select id="type" formControlName="type" (change)="onTypeChange()">
         <option value="" disabled>Choose a type</option>
         <option value="product">Product</option>
         <option value="service">Service</option>
       </select>
+
+      <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.type.hasError('required') &&
+        itemForm.controls.type.touched
+      "
+    >
+      This field is required.
+    </small>
+
     </div>
 
     <div class="form-field">
@@ -23,6 +34,16 @@
         formControlName="code_number"
         placeholder="ITM-004"
       />
+
+      <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.code_number.hasError('required') &&
+        itemForm.controls.code_number.touched
+      "
+    >
+      This field is required.
+    </small>
     </div>
 
     <div class="form-field form-field-name">
@@ -34,6 +55,17 @@
         formControlName="name"
         placeholder="Washer, M8"
       />
+
+      <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.name.hasError('required') &&
+        itemForm.controls.name.touched
+      "
+    >
+      This field is required.
+    </small>
+
     </div>
 
     <div class="form-field">
@@ -46,6 +78,26 @@
         formControlName="price"
         placeholder="1.20"
       />
+
+      <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.price.hasError('required') &&
+        itemForm.controls.price.touched
+      "
+    >
+      This field is required.
+    </small>
+
+    <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.price.hasError('min') &&
+        itemForm.controls.price.dirty
+      "
+    >
+      Price must be greater than 0.
+    </small>
     </div>
 
     <div
@@ -61,6 +113,27 @@
         formControlName="weightKg"
         placeholder="0.01"
       />
+
+      <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.weightKg.hasError('required') &&
+        itemForm.controls.weightKg.touched
+      "
+    >
+      This field is required.
+    </small>
+
+    <small
+    class="error-text"
+    *ngIf="
+      itemForm.controls.weightKg.hasError('min') &&
+      itemForm.controls.weightKg.dirty
+    "
+  >
+    Weight must be greater than 0.
+  </small>
+
     </div>
 
     <div
@@ -72,9 +145,31 @@
       <input
         id="duration"
         type="number"
+        step="1"
         formControlName="durationHours"
         placeholder="2"
       />
+
+      <small
+      class="error-text"
+      *ngIf="
+        itemForm.controls.durationHours.hasError('required') &&
+        itemForm.controls.durationHours.touched
+      "
+    >
+      This field is required.
+    </small>
+
+    <small
+    class="error-text"
+    *ngIf="
+      itemForm.controls.durationHours.hasError('min') &&
+      itemForm.controls.durationHours.dirty
+    "
+  >
+    Duration must be greater than 0.
+  </small>
+     
     </div>
   </div>
 

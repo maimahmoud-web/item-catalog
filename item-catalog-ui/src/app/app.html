@@ -27,8 +27,10 @@
 
 </div>
 
-    <dropDown></dropDown>
+   <dropDown
+  (itemAdded)="showList.showReloadButton()">
+</dropDown>
 
-    <showListType></showListType>
+<showListType #showList></showListType>
   </section>
 </main>

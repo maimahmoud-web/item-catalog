@@ -1,5 +1,5 @@
 import { ItemService } from "./item-service";
-import { createAction,props } from '@ngrx/store';
+
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {  EventEmitter, Output } from '@angular/core';
@@ -23,17 +23,67 @@ import { Item, Product, Service } from './item-models';
 export class dropDown{
 
     itemForm = new FormGroup({
-    type: new FormControl('', Validators.required),
-    code_number: new FormControl<string | null>(null, Validators.required),
-    name: new FormControl('', Validators.required),
-    price: new FormControl<number | null>(null, Validators.required),
-    weightKg: new FormControl<number | null>(null),
-    durationHours: new FormControl<number | null>(null)
-  });
+  type: new FormControl('', Validators.required),
+
+  code_number: new FormControl<string | null>(
+    null,
+    Validators.required
+  ),
+
+  name: new FormControl(
+    '',
+    Validators.required
+  ),
+
+  price: new FormControl<number | null>(
+    null,
+    [
+      Validators.required,
+      Validators.min(0.01)
+    ]
+  ),
+
+  weightKg: new FormControl<number | null>(
+    null,
+    Validators.min(0.01)
+  ),
+
+  durationHours: new FormControl<number | null>(
+    null,
+    Validators.min(1)
+  )
+});
 
     constructor(private itemService: ItemService) {}
 
     @Output() itemAdded = new EventEmitter<void>();
+
+    onTypeChange(): void {
+  const type = this.itemForm.controls.type.value;
+
+  if (type === 'product') {
+    this.itemForm.controls.weightKg.setValidators([
+      Validators.required,
+      Validators.min(0.01)
+    ]);
+
+    this.itemForm.controls.durationHours.clearValidators();
+    this.itemForm.controls.durationHours.setValue(null);
+  }
+
+  if (type === 'service') {
+    this.itemForm.controls.durationHours.setValidators([
+      Validators.required,
+      Validators.min(1)
+    ]);
+
+    this.itemForm.controls.weightKg.clearValidators();
+    this.itemForm.controls.weightKg.setValue(null);
+  }
+
+  this.itemForm.controls.weightKg.updateValueAndValidity();
+  this.itemForm.controls.durationHours.updateValueAndValidity();
+}
 
 onSubmit(): void {
 
@@ -41,6 +91,7 @@ onSubmit(): void {
   console.log('Form value:', this.itemForm.getRawValue());
   console.log('Form valid:', this.itemForm.valid);
     if (this.itemForm.invalid) {
+      this.itemForm.markAllAsTouched();
       return;
     }
     const formValue = this.itemForm.getRawValue();
@@ -57,8 +108,17 @@ onSubmit(): void {
         this.itemService.addProduct(prod).subscribe({
   next: savedProduct => {
     console.log('Product saved:', savedProduct);
-    this.itemForm.reset();
+    this.itemForm.reset({
+  type: '',
+  code_number: null,
+  name: '',
+  price: null,
+  weightKg: null,
+  durationHours: null
+});
+ console.log('✅ FORM RESET');
     this.itemAdded.emit();
+    console.log('✅ itemAdded emitted');
   },
 
   error: error => {
@@ -70,7 +130,6 @@ onSubmit(): void {
 
     if (formValue.type==='service'){
         const ser: Service = {
-          
             code_number:formValue.code_number!,
             name:formValue.name!,
             price:formValue.price!,
@@ -81,7 +140,15 @@ onSubmit(): void {
         this.itemService.addService(ser).subscribe({
   next: savedService => {
     console.log('Service saved:', savedService);
-    this.itemForm.reset();
+    this.itemForm.reset({
+  type: '',
+  code_number: null,
+  name: '',
+  price: null,
+  weightKg: null,
+  durationHours: null
+});
+
     this.itemAdded.emit();
   },
 
