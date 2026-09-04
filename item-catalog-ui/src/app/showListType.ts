@@ -20,6 +20,7 @@ import { deleteItem } from './item.actions';
 export class ShowListType implements OnInit {
 
   items$: Observable<Item[]>;
+  showReload = false;
 
   constructor(
     private store: Store<{ items: ItemState }>
@@ -33,9 +34,22 @@ export class ShowListType implements OnInit {
     this.store.dispatch(loadItem());
   }
 
-  removeItem(id: number): void {
-  this.store.dispatch(
-    deleteItem({ id })
-  );
+  showReloadButton(): void {
+    this.showReload = true;
+  }
+
+  reloadItems(): void {
+    this.store.dispatch(loadItem());
+    this.showReload = false;
+  }
+
+  removeItem(id: number | undefined): void {
+  if (id === undefined) {
+    return;
+  }
+
+  this.store.dispatch(deleteItem({ id }));
 }
+
+
 }

@@ -1,9 +1,60 @@
 
 
 <div class="list-section" *ngIf="items$ | async as items">
-  <div class="list-summary">
-    <strong>{{ items.length }} items</strong>
+ <div class="list-summary">
+
+  <div class="summary-left">
+
+  <div class="summary-icon">
+    <!-- your existing icon -->
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    >
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+
+      <circle cx="4" cy="6" r="1"></circle>
+      <circle cx="4" cy="12" r="1"></circle>
+      <circle cx="4" cy="18" r="1"></circle>
+    </svg>
   </div>
+
+  <strong>{{ items.length }} items</strong>
+
+  <button
+    *ngIf="showReload"
+    type="button"
+    class="reload-button"
+    (click)="reloadItems()"
+    title="Reload items"
+    aria-label="Reload items"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5"></path>
+      <path d="M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5"></path>
+    </svg>
+  </button>
+
+</div>
+
+  <div class="summary-helper">
+    <span class="helper-line"></span>
+    <span>Keep track of all your products and services</span>
+  </div>
+
+</div>
 
   <div class="table-wrapper">
     <table class="items-table">
